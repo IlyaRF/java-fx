@@ -11,9 +11,9 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <TextArea fx:id="chatArea" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="chatArea" editable="false" VBox.vgrow="ALWAYS"/>
     <HBox spacing="20">
-    <TextField fx:id="chatInput" HBox.hgrow="ALWAYS"/>
+    <TextField fx:id="chatInput" HBox.hgrow="ALWAYS" />
         <Button text="Отправить" defaultButton="true" onAction="#clickSentButton"/>
     </HBox>
 </VBox>

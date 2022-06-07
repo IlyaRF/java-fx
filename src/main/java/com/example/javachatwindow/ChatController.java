@@ -15,5 +15,13 @@ public class ChatController {
     }
 
     public void clickSentButton(ActionEvent actionEvent) {
+        final String text = chatInput.getText();
+        chatArea.appendText(text + "\n");
+        chatInput.setText("");
+        if (text.isBlank()) {
+            return;
+
+
+        }
     }
 }
