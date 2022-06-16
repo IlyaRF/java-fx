@@ -1,4 +1,4 @@
-package com.example.javachatwindow;
+package com.example.javachatwindow.client;
 
 public class ChatLogic {
 

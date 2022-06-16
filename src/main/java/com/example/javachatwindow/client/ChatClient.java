@@ -1,4 +1,4 @@
-package com.example.javachatwindow;
+package com.example.javachatwindow.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ChatWindow extends Application {
+public class ChatClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ChatWindow.class.getResource("main-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ChatClient.class.getResource("client-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Chat");
+        stage.setTitle("ChatClient");
         stage.setScene(scene);
         stage.show();
     }
