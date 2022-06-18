@@ -1,45 +1,56 @@
 package com.example.javachatwindow.server;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BaseAuthService implements AuthService {
-    private class Entry {
-        private String login;
-        private String pass;
-        private String nick;
 
-        public Entry(String login, String pass, String nick) {
-            this.login = login;
-            this.pass = pass;
+    private static class UserData {
+        private String nick;
+        private String login;
+        private String password;
+
+        public UserData(String nick, String login, String password) {
             this.nick = nick;
+            this.login = login;
+            this.password = password;
+        }
+
+        public String getNick() {
+            return nick;
+        }
+
+        public String getLogin() {
+            return login;
+        }
+
+        public String getPassword() {
+            return password;
         }
     }
 
-    private List<Entry> entries;
-
-    @Override
-    public void start() {
-        System.out.println("Сервис аутентификации запущен");
-    }
-
-    @Override
-    public void stop() {
-        System.out.println("Сервис аутентификации остановлен");
-    }
+    private List<UserData> users;
 
     public BaseAuthService() {
-        entries = new ArrayList<>();
-        entries.add(new Entry("login1", "pass1", "nick1"));
-        entries.add(new Entry("login2", "pass2", "nick2"));
-        entries.add(new Entry("login3", "pass3", "nick3"));
+        users = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            users.add(new UserData("nick" + i, "login" + i, "pass" + i));
+        }
     }
 
     @Override
-    public String getNickByLoginPass(String login, String pass) {
-        for (Entry o : entries) {
-            if (o.login.equals(login) && o.pass.equals(pass)) return o.nick;
-        }
-        return null;
+    public String getNickByLoginAndPassword(String login, String password) {
+        return users.stream()
+                .filter(user -> login.equals(user.getLogin())
+                        && password.equals(user.getPassword()))
+                .findFirst()
+                .map(UserData::getNick)
+                .orElse(null);
+    }
+
+    @Override
+    public void close() throws IOException {
+        System.out.println("Сервис аутентификации остановлен");
     }
 }

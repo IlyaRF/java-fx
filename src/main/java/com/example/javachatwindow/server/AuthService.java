@@ -1,10 +1,8 @@
 package com.example.javachatwindow.server;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Closeable;
 
-public interface AuthService {
-    void start();
-    String getNickByLoginPass(String login, String pass);
-    void stop();
+public interface AuthService extends Closeable {
+    String getNickByLoginAndPassword(String login, String password);
 }
+

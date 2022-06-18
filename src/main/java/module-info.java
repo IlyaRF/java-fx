@@ -6,4 +6,5 @@ module com.example.javachatwindow {
     opens com.example.javachatwindow to javafx.fxml;
     exports com.example.javachatwindow.client;
     opens com.example.javachatwindow.client to javafx.fxml;
+    exports com.example.javachatwindow;
 }
