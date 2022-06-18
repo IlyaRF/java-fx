@@ -1,7 +1,7 @@
 package com.example.javachatwindow.server;
 
-public class ServerApp {
+public class ServerLauncher {
     public static void main(String[] args) {
-        new MyServer().run();
+        new ChatServer().run();
     }
 }

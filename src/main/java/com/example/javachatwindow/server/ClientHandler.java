@@ -10,13 +10,13 @@ import com.example.javachatwindow.Command;
 
 public class ClientHandler {
     private Socket socket;
-    private MyServer server;
+    private ChatServer server;
     private DataInputStream in;
     private DataOutputStream out;
     private String nick;
     private AuthService authService;
 
-    public ClientHandler(Socket socket, MyServer server, AuthService authService) {
+    public ClientHandler(Socket socket, ChatServer server, AuthService authService) {
         try {
             this.socket = socket;
             this.server = server;

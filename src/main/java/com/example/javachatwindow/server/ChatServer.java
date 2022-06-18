@@ -1,5 +1,7 @@
 package com.example.javachatwindow.server;
 
+import com.example.javachatwindow.Command;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7,19 +9,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.example.javachatwindow.Command;
-
-public class MyServer {
+public class ChatServer {
 
     private final Map<String, ClientHandler> clients;
 
-    public MyServer() {
+    public ChatServer() {
         this.clients = new HashMap<>();
     }
 
     public void run() {
         try (ServerSocket serverSocket = new ServerSocket(8189);
-             AuthService authService = new BaseAuthService()) {
+             AuthService authService = new InMemoryAuthService()) {
             while (true) {
                 System.out.println("Ожидаю подключения...");
                 final Socket socket = serverSocket.accept();
