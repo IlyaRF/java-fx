@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 public enum Command {
     AUTH("/auth") { // /auth login1 pass1
 
