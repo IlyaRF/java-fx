@@ -30,7 +30,6 @@ public class ChatServer {
             e.printStackTrace();
         }
     }
-
     public void subscribe(ClientHandler client) {
         clients.put(client.getNick(), client);
         broadcastClientsList();
@@ -67,4 +66,5 @@ public class ChatServer {
         clientTo.sendMessage(Command.MESSAGE, "От " + from.getNick() + ": " + message);
         from.sendMessage(Command.MESSAGE, "Участнику " + nickTo + ": " + message);
     }
+
 }

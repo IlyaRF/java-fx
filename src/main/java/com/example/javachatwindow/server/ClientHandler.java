@@ -39,9 +39,7 @@ public class ClientHandler {
     private void authenticate() {
         try {
             socket.setSoTimeout(120000);
-            boolean checkIsLoggedIn;
             while (true) {
-                checkIsLoggedIn = false;
                 final String message = in.readUTF();
                 final Command command = Command.getCommand(message);
                 if (command == Command.AUTH) {
@@ -68,37 +66,6 @@ public class ClientHandler {
             exception.printStackTrace();
         }
     }
-
-
-       /* while (true) {
-            try {
-                final String message = in.readUTF();
-                final Command command = Command.getCommand(message);
-
-                if (command == Command.AUTH) {
-                    final String[] params = command.parse(message);
-                    final String login = params[0];
-                    final String password = params[1];
-                    final String nick = authService.getNickByLoginAndPassword(login, password);
-                    if (nick != null) {
-                        if (server.isNickBusy(nick)) {
-                            sendMessage(Command.ERROR, "Пользователь уже авторизован");
-                            continue;
-                        }
-                        sendMessage(Command.AUTHOK, nick);
-                        this.nick = nick;
-                        server.broadcast(Command.MESSAGE, "Пользователь " + nick + " зашел в чат");
-                        server.subscribe(this);
-                        break;
-                    } else {
-                        sendMessage(Command.ERROR, "Неверные логин и пароль");
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 
     public void sendMessage(Command command, String... params) {
         sendMessage(command.collectMessage(params));
