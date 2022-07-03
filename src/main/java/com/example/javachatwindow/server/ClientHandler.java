@@ -7,6 +7,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler {
     private Socket socket;
@@ -25,6 +27,7 @@ public class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             new Thread(() -> {
                 try {
+                    timeoutClient(socket,120000);
                     authenticate();
                     readMessages();
                 } finally {
@@ -35,6 +38,14 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+    public void timeoutClient(Socket socket, int mSek) {
+        try {
+            socket.setSoTimeout(mSek);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void authenticate() {
         while (true) {
@@ -60,10 +71,15 @@ public class ClientHandler {
                     } else {
                         sendMessage(Command.ERROR, "Неверные логин и пароль");
                     }
+
                 }
+            } catch (SocketTimeoutException e) {
+            System.out.println("Отлючение по таймауту");
+            break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 

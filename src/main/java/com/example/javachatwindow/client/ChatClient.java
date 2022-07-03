@@ -1,5 +1,6 @@
 package com.example.javachatwindow.client;
 
+
 import com.example.javachatwindow.Command;
 import javafx.application.Platform;
 
