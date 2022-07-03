@@ -7,6 +7,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler {
     private Socket socket;
@@ -25,6 +27,7 @@ public class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             new Thread(() -> {
                 try {
+                    timeoutClient(socket,120000);
                     authenticate();
                     readMessages();
                 } finally {
@@ -35,15 +38,22 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+    public void timeoutClient(Socket socket, int mSek) {
+        try {
+            socket.setSoTimeout(mSek);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void authenticate() {
-        try {
-            socket.setSoTimeout(120000);
-            while (true) {
+        while (true) {
+            try {
                 final String message = in.readUTF();
                 final Command command = Command.getCommand(message);
+
                 if (command == Command.AUTH) {
-                    String[] parts = message.split("\\s");
                     final String[] params = command.parse(message);
                     final String login = params[0];
                     final String password = params[1];
@@ -53,17 +63,23 @@ public class ClientHandler {
                             sendMessage(Command.ERROR, "Пользователь уже авторизован");
                             continue;
                         }
+                        sendMessage(Command.AUTHOK, nick);
                         this.nick = nick;
                         server.broadcast(Command.MESSAGE, "Пользователь " + nick + " зашел в чат");
                         server.subscribe(this);
-                        socket.setSoTimeout(0);
+                        break;
+                    } else {
+                        sendMessage(Command.ERROR, "Неверные логин и пароль");
                     }
-                } else {
-                    sendMessage(Command.ERROR, "Неверные логин и пароль");
+
                 }
+            } catch (SocketTimeoutException e) {
+            System.out.println("Отлючение по таймауту");
+            break;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException exception) {
-            exception.printStackTrace();
+
         }
     }
 
