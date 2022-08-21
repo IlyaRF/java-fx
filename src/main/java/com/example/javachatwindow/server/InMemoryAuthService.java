@@ -1,8 +1,9 @@
 package com.example.javachatwindow.server;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.javachatwindow.server.Connection.JdbcApp.connect;
 
 public class InMemoryAuthService implements AuthService {
 
@@ -32,11 +33,8 @@ public class InMemoryAuthService implements AuthService {
 
     private List<UserData> users;
 
-    public InMemoryAuthService() {
-        users = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            users.add(new UserData("nick" + i, "login" + i, "pass" + i));
-        }
+    public InMemoryAuthService() throws Connection.JdbcApp.SQLException {
+        connect();
     }
 
     @Override

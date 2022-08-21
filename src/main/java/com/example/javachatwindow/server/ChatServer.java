@@ -28,6 +28,8 @@ public class ChatServer {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Connection.JdbcApp.SQLException e) {
+            e.printStackTrace();
         }
     }
     public void subscribe(ClientHandler client) {
