@@ -26,9 +26,7 @@ public class ChatServer {
                 new ClientHandler(socket, this, authService);
                 System.out.println("Клиент подключен");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Connection.JdbcApp.SQLException e) {
+        } catch (IOException | Connection.JdbcApp.SQLException e) {
             e.printStackTrace();
         }
     }
