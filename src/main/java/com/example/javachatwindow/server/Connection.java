@@ -13,7 +13,7 @@ public interface Connection {
             }
         }
         public static void connect() throws SQLException {
-            connection = DriverManager.getConnection("jdbc:sqlite:C:/java/java-chatWindow/src/main/resources/SqlLite.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/SqlLite.db");
         }
         public static void disconnect() {
             if (connection != null) {
