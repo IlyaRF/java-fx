@@ -19,14 +19,14 @@ public class ChatServer {
 
     public void run() {
         try (ServerSocket serverSocket = new ServerSocket(8189);
-             AuthService authService = new InMemoryAuthService()) {
+             AuthService authService = new Connection()) {
             while (true) {
                 System.out.println("Ожидаю подключения...");
                 final Socket socket = serverSocket.accept();
                 new ClientHandler(socket, this, authService);
                 System.out.println("Клиент подключен");
             }
-        } catch (IOException | Connection.JdbcApp.SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

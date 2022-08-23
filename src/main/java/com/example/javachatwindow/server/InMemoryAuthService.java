@@ -3,7 +3,7 @@ package com.example.javachatwindow.server;
 import java.io.IOException;
 import java.util.List;
 
-import static com.example.javachatwindow.server.Connection.JdbcApp.connect;
+import static com.example.javachatwindow.server.Connection.connect;
 
 public class InMemoryAuthService implements AuthService {
 
@@ -33,7 +33,7 @@ public class InMemoryAuthService implements AuthService {
 
     private List<UserData> users;
 
-    public InMemoryAuthService() throws Connection.JdbcApp.SQLException {
+    public InMemoryAuthService() throws IOException {
         connect();
     }
 
