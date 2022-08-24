@@ -19,7 +19,12 @@ public class ChatServer {
 
     public void run() {
         try (ServerSocket serverSocket = new ServerSocket(8189);
-             AuthService authService = new Connection()) {
+             AuthService authService = new Connection() {
+                 @Override
+                 public void close() throws IOException {
+
+                 }
+             }) {
             while (true) {
                 System.out.println("Ожидаю подключения...");
                 final Socket socket = serverSocket.accept();

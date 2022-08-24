@@ -3,8 +3,6 @@ package com.example.javachatwindow.server;
 import java.io.IOException;
 import java.util.List;
 
-import static com.example.javachatwindow.server.Connection.connect;
-
 public class InMemoryAuthService implements AuthService {
 
     private static class UserData {
@@ -33,9 +31,6 @@ public class InMemoryAuthService implements AuthService {
 
     private List<UserData> users;
 
-    public InMemoryAuthService() throws IOException {
-        connect();
-    }
 
     @Override
     public String getNickByLoginAndPassword(String login, String password) {

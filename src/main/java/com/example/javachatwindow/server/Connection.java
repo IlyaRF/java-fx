@@ -10,7 +10,7 @@ public abstract class Connection implements AuthService {
 
     public Connection() {
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite" + DB_PATH);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
         } catch (SQLException e) {
             throw new RuntimeException("Не удалось подключиться к базе " + e.getMessage(), e);
         }
@@ -19,7 +19,7 @@ public abstract class Connection implements AuthService {
     @Override
     public String getNickByLoginAndPassword(String login, String password) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("select username from auth where login = ? and password = ?");
+            PreparedStatement stmt = connection.prepareStatement("select * from Contacts where Login = ? and Password = ?");
             stmt.setString(1, login);
             stmt.setString(2, password);
 
