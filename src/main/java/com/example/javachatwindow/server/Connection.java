@@ -1,8 +1,9 @@
 package com.example.javachatwindow.server;
 
+import java.io.IOException;
 import java.sql.*;
 
-public abstract class Connection implements AuthService {
+public class Connection implements AuthService {
 
 
     public static final String DB_PATH = "src/main/resources/SqlLite.db";
@@ -41,5 +42,10 @@ public abstract class Connection implements AuthService {
             }
 
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+
     }
 }

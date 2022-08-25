@@ -53,7 +53,6 @@ public class ChatServer {
 
     public void broadcast(Command command, String message) {
         for (ClientHandler client : clients.values()) {
-            client.sendMessage(command, message);
         }
     }
 
