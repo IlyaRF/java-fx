@@ -79,7 +79,7 @@ public enum Command {
         return message.startsWith("/");
     }
 
-    public static Command getCommand(String message) { // /klkj n nlknl
+    public static Command getCommand(String message) {
         if (!isCommand(message)) {
             throw new RuntimeException("'" + message + "' is not a command");
         }

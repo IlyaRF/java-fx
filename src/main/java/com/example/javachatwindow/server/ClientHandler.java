@@ -17,7 +17,6 @@ public class ClientHandler {
     private DataOutputStream out;
     private String nick;
     private AuthService authService;
-
     public ClientHandler(Socket socket, ChatServer server, AuthService authService) {
         try {
             this.socket = socket;
@@ -27,7 +26,7 @@ public class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             new Thread(() -> {
                 try {
-                    timeoutClient(socket,120000);
+                    timeoutClient(socket, 120000);
                     authenticate();
                     readMessages();
                 } finally {
@@ -38,6 +37,7 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+
     public void timeoutClient(Socket socket, int mSek) {
         try {
             socket.setSoTimeout(mSek);
@@ -74,12 +74,11 @@ public class ClientHandler {
 
                 }
             } catch (SocketTimeoutException e) {
-            System.out.println("Отлючение по таймауту");
-            break;
+                System.out.println("Отлючение по таймауту");
+                break;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 

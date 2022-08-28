@@ -19,7 +19,12 @@ public class ChatServer {
 
     public void run() {
         try (ServerSocket serverSocket = new ServerSocket(8189);
-             AuthService authService = new InMemoryAuthService()) {
+             AuthService authService = new Connection() {
+                 @Override
+                 public void close() throws IOException {
+
+                 }
+             }) {
             while (true) {
                 System.out.println("Ожидаю подключения...");
                 final Socket socket = serverSocket.accept();
@@ -48,7 +53,6 @@ public class ChatServer {
 
     public void broadcast(Command command, String message) {
         for (ClientHandler client : clients.values()) {
-            client.sendMessage(command, message);
         }
     }
 
