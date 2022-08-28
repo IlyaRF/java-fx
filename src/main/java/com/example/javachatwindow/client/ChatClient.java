@@ -17,7 +17,7 @@ public class ChatClient {
     private DataInputStream in;
     private DataOutputStream out;
 
-    private final ChatController controller;
+    public final ChatController controller;
 
     public ChatClient(ChatController controller) {
         this.controller = controller;
@@ -38,6 +38,7 @@ public class ChatClient {
             }
         }).start();
 
+
     }
 
     private void waitAuth() throws IOException {
@@ -49,11 +50,14 @@ public class ChatClient {
                 final String nick = params[0];
                 controller.setAuth(true);
                 controller.addMessage("Успешная авторизация под ником " + nick);
+                ChatController.loadHistory();
                 break;
             }
             if (command == ERROR) {
                 Platform.runLater(() -> controller.showError(params[0]));
+                ChatController.SaveHistory();
                 continue;
+
             }
         }
     }

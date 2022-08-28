@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class ClientHandler {
     private Socket socket;
@@ -19,7 +17,6 @@ public class ClientHandler {
     private DataOutputStream out;
     private String nick;
     private AuthService authService;
-    Path file = Path.of("files", "history [" + getNick() + "].txt");
     public ClientHandler(Socket socket, ChatServer server, AuthService authService) {
         try {
             this.socket = socket;
@@ -87,22 +84,6 @@ public class ClientHandler {
 
     public void sendMessage(Command command, String... params) {
         sendMessage(command.collectMessage(params));
-        addStringToFile(file);
-
-    }
-
-    public void addStringToFile(Path path) {
-        Path file = Path.of("files", "history [" + getNick() + "].txt");
-        if (Files.exists(file)) {
-            //добавляем строки в текст
-        }
-        else {
-            try {
-                Files.createFile(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void closeConnection() {
